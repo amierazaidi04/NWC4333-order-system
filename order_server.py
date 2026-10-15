@@ -25,7 +25,7 @@ def handle_request(conn, addr):
         parts = message.split("|")
         cmd = parts[0].upper()
 
-        if cmd == "ORDER" and len(parts) == 3 and parts[1] in stock and parts[2].isdigit():
+        if cmd == "ORDER" and len(parts) == 3 and parts[1] in stock and parts[2].isdigit() and int(parts[2]) > 0:
             item, qty = parts[1], int(parts[2])
             with locks[item]:                      
                 time.sleep(DB_LATENCY)             
@@ -38,6 +38,8 @@ def handle_request(conn, addr):
 
         elif cmd == "STOCK":
             reply = "STOCK|" + "|".join(f"{k}={v}" for k, v in stock.items())
+        elif cmd == "ORDER" and len(parts) == 3 and parts[1] not in stock:
+            reply = "ERROR|Invalid product"
         else:
             reply = "ERROR|Invalid command"
 
