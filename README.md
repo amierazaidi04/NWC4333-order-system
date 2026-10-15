@@ -20,7 +20,6 @@ An online shop can receive many orders at the same time. This system accepts ord
 | `order_system.py` | Shared logic and demos: stock, locks, order log, race condition demo, deadlock demo, scalability test |
 | `order_server.py` | TCP order server (producer-consumer: accept, queue, worker pool) |
 | `order_client.py` | Load-test client: sends many simultaneous orders and prints metrics |
-| `config/` | [Member A: configuration files. Delete this row if the team has none] |
 | `results/` | Test outputs and screenshots |
 | `docs/` | Diagrams |
 
@@ -79,15 +78,15 @@ Reply:   ERROR|Invalid command
 
 ## Test results
 
-Test outputs and screenshots are in `results/`. Summary (update these numbers if you rerun the tests):
+Test outputs and screenshots are available in the `results/` folder. The table below summarizes the final test results.
 
 | Test | Result |
 |---|---|
-| Race condition, no lock | 222 of 400 orders were lost updates |
+| Race condition, no lock | 227 of 400 orders were lost updates |
 | Race condition, with lock | 0 lost updates |
-| Deadlock, no lock ordering | 25 of 100 completed, 75 deadlock timeouts |
-| Deadlock, sorted lock order | 100 of 100 completed, 0 timeouts |
-| Scalability, 1 to 8 workers | 376 to 1493 orders/s (3.98x speedup) |
+| Lock ordering disabled | 34 of 100 completed, 66 lock timeouts |
+| Sorted lock ordering | 100 of 100 completed, 0 lock timeouts |
+| Scalability, 1 to 8 workers | 64 to 248 orders/s (3.87x speedup) |
 
 ## Limitations
 
