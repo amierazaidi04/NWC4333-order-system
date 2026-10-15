@@ -2,7 +2,7 @@
 
 Network Administration, UPTM. Group project (3 members).
 
-**Members:** [Amiera] | [Aliya] | [Farhana]
+**Members:** Amiera, Aliya & Farhana
 
 ## What this project does
 
