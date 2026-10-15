@@ -110,13 +110,13 @@ def process_multi(order_list, num_workers=4, ordered=False, timeout=0.1):
                 return
             items = sorted(order) if ordered else list(order)
             first, second = items[0][0], items[1][0]
-            if not locks[first].acquire(timeout=timeout):
+            if not (locks[first].acquire() if ordered else locks[first].acquire(timeout=timeout)):
                 with sl:
                     stats["deadlock_timeouts"] += 1
                 continue
             try:
                 time.sleep(0.001) 
-                if not locks[second].acquire(timeout=timeout):
+                if not (locks[second].acquire() if ordered else locks[second].acquire(timeout=timeout)):
                     with sl:
                         stats["deadlock_timeouts"] += 1
                     continue
